@@ -90,8 +90,8 @@
             },
             created() {
                 console.log("Prueba created")
-                this.question = "CheckList";
-                let strQuestion = "Option_1,Option_2,Option_3,Option_4";
+                this.question = getParameterByName('q');
+                let strQuestion = getParameterByName('opt').replace(/_/g, " ");
                 if (strQuestion.endsWith(",")) {
                     strQuestion = strQuestion.slice(0, -1);
                 }
