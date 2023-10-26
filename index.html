@@ -1,17 +1,101 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta charset="utf-8" />
+    <title>Lista de selección múltiple</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../CSS/Checklist.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        main {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            background-color: #f3f2f8;
+        }
+
+        section {
+            width: 80vw;
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 20px 16px;
+            margin-top: 10vh;
+        }
+
+        .form-check{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 10px;
+        }
+
+        .form-check-input {
+            width: 1.5em;
+            height: 1.5em;
+        }
+
+        label {
+            padding-left: 10px;
+            padding-top: 3px;
+        }
+    </style>
 </head>
 <body>
-    <button id="main_btn" onclick="sendMessage()">Send «Hello, World!»</button>
+    <main id="appTelegramCheckList">
+        <section>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                <label class="form-check-label" for="flexCheckChecked">
+                    Checked checkbox
+                </label>
+            </div>
+        </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
-        function sendMessage(){
-            console.log("Prueba")
-            Telegram.WebApp.sendData("Mensaje");
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const strQuestion = getParameterByName('q')
+        const setOptions = getParameterByName('opt')
+
+        const appTelegramCheckList = new Vue({
+            el: '#appTelegramCheckList',
+            data: {
+
+            },
+            created() {
+                console.log("Prueba created")
+            },
+            mounted() {
+                console.log("Prueba mount")
+            },
+            methods: {
+                SendDataTelegram(text) {
+                    Telegram.WebApp.sendData(text);
+                }
+            }
+        })
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1]);
         }
     </script>
 </body>
