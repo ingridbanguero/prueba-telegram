@@ -19,17 +19,18 @@
         main {
             height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: start;
+            align-items: center;
+            flex-direction: column;
             background-color: #f3f2f8;
         }
 
         section {
             width: 80vw;
             background-color: #fff;
-            border-radius: 20px;
+            border-radius: 16px;
             padding: 20px 16px;
-            margin-top: 10vh;
+            margin-top: 6vh;
+            margin-bottom: 2vh;
         }
 
         .form-check{
@@ -47,46 +48,61 @@
             padding-left: 10px;
             padding-top: 3px;
         }
+
+        .send {
+            width: 80vw;
+        }
+
+        .send input {
+            width: 100%;
+        }
+
+        .question{
+            padding-left: 6px;
+        }
     </style>
 </head>
 <body>
     <main id="appTelegramCheckList">
         <section>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                <label class="form-check-label" for="flexCheckDefault">
-                    Lorem Ipsum es simplemente el texto de relleno de las imprentas y archivos de texto. Lorem Ipsum ha sido
-                </label>
+            <div class="question">
+                <p>{{ question }}</p>
             </div>
-            <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
-                <label class="form-check-label" for="flexCheckChecked">
-                    Checked checkbox
+            <div class="form-check" v-for="(opt, i) in options" v-bind:key="i">
+                <input class="form-check-input" type="checkbox" v-model="selectedOptions" v-bind:value="opt" id="flexCheckDefault">
+                <label class="form-check-label" for="flexCheckDefault">
+                    {{opt}}
                 </label>
             </div>
         </section>
+        <div class="send">
+            <input class="btn btn-primary" type="submit" value="Aceptar" @click="SendDataTelegram()">
+        </div>
     </main>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <script>
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const strQuestion = getParameterByName('q')
-        const setOptions = getParameterByName('opt')
-
         const appTelegramCheckList = new Vue({
             el: '#appTelegramCheckList',
             data: {
-
+                question: "",
+                options: [],
+                selectedOptions: []
             },
             created() {
                 console.log("Prueba created")
-            },
-            mounted() {
-                console.log("Prueba mount")
+                this.question = "CheckList";
+                let strQuestion = "Option_1,Option_2,Option_3,Option_4";
+                if (strQuestion.endsWith(",")) {
+                    strQuestion = strQuestion.slice(0, -1);
+                }
+                this.options = strQuestion.split(",");
             },
             methods: {
-                SendDataTelegram(text) {
-                    Telegram.WebApp.sendData(text);
+                SendDataTelegram() {
+                    if (this.selectedOptions.length !== 0) {
+                        Telegram.WebApp.sendData(this.selectedOptions.join(", "));
+                        Telegram.WebApp.close();
+                    } 
                 }
             }
         })
