@@ -1,213 +1,117 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Recolector de Firmas</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/1.5.3/signature-pad.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap-reboot.min.css" integrity="sha256-xolClKTYJpwtP72qx+mYQO/1LAkEsRgTBr7VFfWsBNw=" crossorigin="anonymous" />
-<link href="https://fonts.googleapis.com/css?family=Nunito:600" rel="stylesheet">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="style.css">
-<script src="https://telegram.org/js/telegram-web-app.js"></script>
-<style>
-html,
-body {
-  background-color: #dedede;
-  overflow-y: hidden;
-  overflow-x: hidden;
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 4em;
-}
-
-.button {
-  display: block;
-  width: 20em;
-  height: 2.5em;
-  border-radius: 7px;
-  padding: 0.75em;
-  margin-bottom: 1em;
-  line-height: 1em;
-  text-align: center;
-  white-space: nowrap;
-  vertical-align: middle;
-  font-size: 1rem;
-  font-weight: bold;
-  font-family: "Nunito", sans-serif;
-}
-
-.button:hover {
-  text-decoration: none;
-}
-
-.button:focus,
-.button.focus {
-  outline: none;
-}
-
-.button-primary,
-header {
-  background: linear-gradient(to right, #21cfa6, #5fca83);
-  color: white !important;
-}
-
-.button-primary:hover {
-  background: linear-gradient(to right, #2cddb4, #72d092);
-}
-
-.button-primary:active,
-.button-primary.active {
-  background: linear-gradient(to right, #28ae8f, #58b878);
-  box-shadow: 0 6px 6px 0 rgba(109, 115, 119, 0.17);
-}
-
-.button-primary:focus,
-.button-primary.focus {
-  background: linear-gradient(to right, #28ae8f, #58b878);
-}
-
-html,
-body {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #ecf0f1;
-  justify-content: space-between;
-}
-
-header {
-  width: 100%;
-  height: 4em;
-  margin-bottom: 1em;
-  text-align: center;
-  padding-top: 1em;
-  max-height: 54px;
-}
-
-canvas {
-  width: 100%;
-  height: 100%;
-  border: 1px #5fca83 dashed;
-  border-radius: 7px;
-}
-
-.signature-pad-container {
-  width: 70vw;
-  height: 50vh;
-  min-height: 25em;
-  padding: 1.5em;
-  position: relative;
-  background-color: white;
-  box-shadow: 0 0 20px 1px #ddd;
-  text-align: right;
-}
-
-.signature-button-container{
-    margin-top: 1em;
-    margin-bottom: 2em;
-}
-
-a {
-  cursor: pointer;
-}
-
-@media (max-width: 767px) {
-    .signature-pad-container{
-        min-height: auto;
-        height: 70vh;
-        width: 90vw;
-    }
-}
-
-@media (orientation: landscape) {
-    header {
-        max-height: 54px;
-    }
-    .signature-pad-container{
-        min-height: auto;
-        height: calc(100vh - 145px);
-        width: 90vw;
-    }
-    .signature-button-container{
-        display: flex;
-        margin-top: 1em;
-        margin-bottom: 0.5em;
-    }
-
-    .signature-button-container a{
-        max-width: 250px;
-        margin: 0px 16px;
-    }
-}
-
-@media (min-width: 767px) {
-    .signature-pad-container{
-        max-height: 60vh;
-        max-width: 60vw;
-    }
-    .signature-button-container{
-        margin-bottom: 3em;
-    }
-}
-
-</style>
-</head>
-<body scroll=no>
-    <header>Ingrese su firma</header>
-    <div class="signature-pad-container">
-        <canvas id="signature_pad"></canvas>
-    </div>
-    <div  class="signature-button-container">
-        <a class="button button-primary" id="clear_button">Limpiar</a>
-        <a class="button button-primary" id="finish_button">Finalizar</a>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
-
-    <script>     
-        document.addEventListener("DOMContentLoaded", function() {
-        var canvas = document.querySelector("#signature_pad");
-        var signaturePad = new SignaturePad(canvas, {
-            minWidth: 2,
-            maxWidth: 4,
-        });
-
-        Telegram.WebApp.expand();
-        Telegram.WebApp.viewportStableHeight
-        Telegram.WebApp.onEvent('viewportChanged', (isStateStable ) => {
-          console.log(isStateStable.isStateStable)
-        })
-        Telegram.WebApp.offEvent('viewportChanged')
-
-        function resizeCanvas() {
-            var ratio =  Math.max(window.devicePixelRatio || 1, 1);
-            canvas.width = canvas.offsetWidth * ratio;
-            canvas.height = canvas.offsetHeight * ratio;
-            canvas.getContext("2d").scale(ratio, ratio);
-            let storedData = signaturePad.toData();
-            signaturePad.clear(); // otherwise isEmpty() might return incorrect value
-            signaturePad.fromData(storedData);
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <meta name="author" content="WideTech">
+    <meta charset="utf-8" />
+    <title>Lista de selección múltiple</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="../CSS/Checklist.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
-        window.addEventListener("resize", resizeCanvas);
-        resizeCanvas();
-        
-        var clearButton = document.querySelector("#clear_button");
-        clearButton.addEventListener("click", function() {
-            signaturePad.clear();
-        });
-        
-        var finishButton = document.querySelector("#finish_button");
-        finishButton.addEventListener("click", function() {
+        main {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            background-color: #f3f2f8;
+        }
 
-        });
-    });
+        section {
+            width: 80vw;
+            background-color: #fff;
+            border-radius: 16px;
+            padding: 20px 16px;
+            margin-top: 6vh;
+            margin-bottom: 2vh;
+        }
+
+        .form-check{
+            padding-top: 10px;
+            padding-bottom: 10px;
+            padding-right: 10px;
+        }
+
+        .form-check-input {
+            width: 1.5em;
+            height: 1.5em;
+        }
+
+        label {
+            padding-left: 10px;
+            padding-top: 3px;
+        }
+
+        .send {
+            width: 80vw;
+        }
+
+        .send input {
+            width: 100%;
+        }
+
+        .question{
+            padding-left: 6px;
+        }
+    </style>
+</head>
+<body scroll=no>
+    <main id="appTelegramCheckList">
+        <div class="send">
+            <input class="btn btn-primary" type="submit" value="Abrir" @click="SendDataTelegram()">
+        </div>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://unpkg.com/vue-the-mask@0.11.1/dist/vue-the-mask.js"></script>
+    <script>
+        const appTelegramCheckList = new Vue({
+            el: '#appTelegramCheckList',
+            data: {
+                question: "",
+                options: [],
+                selectedOptions: []
+            },
+            created() {
+                console.log("Prueba created")
+                this.question = "CheckList";
+                let strQuestion = getParameterByName('opt').replace(/_/g, " ");
+                if (strQuestion.endsWith(",")) {
+                    strQuestion = strQuestion.slice(0, -1);
+                }
+                this.options = strQuestion.split(",");
+            },
+            methods: {
+                SendDataTelegram() {
+                    Telegram.WebApp.showScanQrPopup("Hola")
+                }
+            }
+
+        })
+
+        Telegram.WebApp.onEvent('viewportChanged', setViewportData);
+        Telegram.WebApp.onEvent('viewportChanged', callback_prueba);
+
+
+        function callback_prueba(e){
+            console.log(e)
+        }
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1]);
+        }
     </script>
 </body>
 </html>
