@@ -23,14 +23,17 @@
             scanQR() {
                 console.log("Scan")
                 Telegram.WebApp.showScanQrPopup("Escanea el codigo");
-                window.addEventListener('qrTextReceived', event => {
-                    this.qrText = event.detail;
-                    Telegram.WebApp.closeScanQrPopUp();
-                    alert('Texto del código QR:', this.qrText);
+                Telegram.WebApp.onEvent('qrTextReceived', (e) => {
+                    alert(e)
+                    alert(e.data)
                 });
             }
         }
 });
+
+
+
+
 </script>
 </body>
 </html>
