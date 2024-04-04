@@ -21,17 +21,11 @@
         },
         methods: {
             scanQR() {
-                // Mostrar el pop-up para escanear el código QR
-                Telegram.WebApp.showScanQrPopUp();
-
-                // Escuchar el evento cuando se recibe el texto del código QR
+                console.log("Scan")
+                Telegram.WebApp.showScanQrPopup("Escanea el codigo");
                 window.addEventListener('qrTextReceived', event => {
                     this.qrText = event.detail;
-                    // Cerrar el pop-up después de recibir el texto del código QR
                     Telegram.WebApp.closeScanQrPopUp();
-                    
-                    // Aquí puedes hacer lo que quieras con el texto del código QR
-                    // Por ejemplo, enviarlo al BOT de Telegram
                     alert('Texto del código QR:', this.qrText);
                 });
             }
