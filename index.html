@@ -19,16 +19,17 @@
         data: {
             qrText: ''
         },
-        methods: {
-            scanQR() {
-                console.log("Scan")
-                Telegram.WebApp.showScanQrPopup("Escanea el codigo");
-                Telegram.WebApp.onEvent('qrTextReceived', (e) => {
-                    alert(e)
-                    alert(e.data)
-                });
-            }
-        }
+        created() {
+            Telegram.WebApp.showScanQrPopup("Escanea el codigo QR");
+            Telegram.WebApp.onEvent('qrTextReceived', (e) => {
+                alert(e.data)
+                if (e.data) {
+                    Telegram.WebApp.sendData(e.data);
+                    Telegram.WebApp.closeScanQrPopup();
+                    Telegram.WebApp.close();
+                } 
+            });
+        },
 });
 
 
